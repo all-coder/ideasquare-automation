@@ -1,5 +1,7 @@
 from machine import Pin,I2C
 from time import sleep
+from flask import Flask, request, jsonify
+
 #these are api wrappers downloaded from github 
 from libraries import lcd_api,pico_i2c_lcd
 
@@ -89,8 +91,25 @@ def checkPin(guess):
 
 print("Enter the secret Pin")
 
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Welcome to the Inventory Flask server!"
+
+
+@app.route('/data', methods=['POST'])
+def handle_data():
+    data = request.json
+    if not data:
+        return jsonify({"error": "No JSON received"}), 400
+    # Process the received data
+    return jsonify({"message": "Data received", "data": data}), 200
+
+
 
 def main():
+    app.run(host='0.0.0.0', port=5000)
     lcd.putstr("Inventory System")
     lcd.move_to(0,1)
     lcd.putstr("Starting Up...")
