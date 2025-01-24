@@ -27,8 +27,8 @@ A sample of the circuitry worked out could be viewed at wokwi.com, visit the fol
 
 
 ## Sofware Requirements
-Frontend - Flutter SDK
-Server - Go + Gin
-Database - Firestore & Firebase Buckets
+ - Frontend - Flutter SDK
+ - Server - Go + Gin
+ - Database - Firestore & Firebase Buckets
 
 For more info view the readme.md files for each section of this project.
