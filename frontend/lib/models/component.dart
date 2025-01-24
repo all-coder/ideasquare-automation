@@ -1,3 +1,4 @@
+// all-coder
 class Component {
   const Component({
     required this.name,
@@ -6,6 +7,7 @@ class Component {
     required this.imageURL,
     required this.description,
     required this.datasheetLink,
+    required this.position
   });
   final String name;
   final int id;
@@ -13,4 +15,5 @@ class Component {
   final String imageURL;
   final String description;
   final String datasheetLink;
+  final List<int> position;
 }

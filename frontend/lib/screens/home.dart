@@ -1,3 +1,5 @@
+// all-coder
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
@@ -8,11 +10,15 @@ import '../widgets/component_tile.dart';
 import '../models/dummy.dart';
 //import 'package:frontend/models/component.dart';
 
+
+
+//#######  important comments ########
+
 //this is the root or the home page of the app
 //this is stateless widget by default
 //where you see sizedBox(), I mainly used them for spacing and relative adjustment of widgets
-//never use chatgpt, it always complicates code for some reason,
-//use stackoverflow to understand the problem and adjust it on your own
+//never use chatgpt, it always complicates your code.
+//use stackoverflow to understand the problem and try adjusting the code on your own.
 class Home extends StatelessWidget {
   const Home({super.key});
   @override
@@ -127,34 +133,12 @@ class Home extends StatelessWidget {
               ],
             ),
           ),
-          //this is where the filters go
+
           const Filter(),
 
           const SizedBox(
             height: 10,
           ),
-          // const Row(
-          //   children: [
-          //     ComponentTile(
-          //       component: Component(
-          //           name: "Resistor",
-          //           available: 4,
-          //           id: 56,
-          //           datasheetLink: "nothing",
-          //           description: "A resistor is used for resisting current",
-          //           imageURL: "nothing here"),
-          //     ),
-          //     ComponentTile(
-          //       component: Component(
-          //           name: "Resistor",
-          //           available: 4,
-          //           id: 56,
-          //           datasheetLink: "nothing",
-          //           description: "A resistor is used for resisting current",
-          //           imageURL: "nothing here"),
-          //     ),
-          //   ],
-          // ),
           Expanded(
             child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

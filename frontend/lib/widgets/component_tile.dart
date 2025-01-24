@@ -1,11 +1,15 @@
+// all-coder
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 
 //relative imports
-//importing the Component model
 import '../models/component.dart';
+import '../screens/component_view.dart';
 
+
+// ##### important comments #####
 
 //this is the widget reponsible for the tiles you see on the app
 //expects a Component class(component.dart-a useful abstraction)
@@ -28,14 +32,21 @@ class _ComponentTileState extends State<ComponentTile> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            color: Colors.white,
-            height: 120,
-            margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
-            child: Image.asset(
-              widget.component.imageURL,
-              alignment:Alignment.center ,
-              fit: BoxFit.cover,
+          GestureDetector(
+            onTap: (){
+              Navigator.of(context).push(MaterialPageRoute(builder: (ctx){
+                return ComponentView(component: widget.component);
+              }));
+            },
+            child: Container(
+              color: Colors.white,
+              height: 120,
+              margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
+              child: Image.asset(
+                widget.component.imageURL,
+                alignment:Alignment.center ,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           const SizedBox(
