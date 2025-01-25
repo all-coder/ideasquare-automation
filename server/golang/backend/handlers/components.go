@@ -15,7 +15,7 @@ func GetComponents(items *[]models.Component) gin.HandlerFunc {
 		if numStr := c.Query("num"); numStr != "" {
 			n, err := strconv.Atoi(numStr)
 			if err != nil || n < -2 {
-				c.JSON(http.StatusBadRequest, gin.H{"error": "num cannot be negative or invalid"})
+				c.JSON(http.StatusBadRequest, gin.H{"Error": "num cannot be negative or invalid"})
 				return
 			}
 			num = n
@@ -42,5 +42,28 @@ func AddNewComponent(items *[]models.Component) gin.HandlerFunc {
 		}
 		*items = append(*items, newComponent)
 		c.IndentedJSON(http.StatusOK, newComponent)
+	}
+}
+
+func SearchComponent(items *[]models.Component) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		idStr := c.Query("id")
+		if idStr == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"Error": "Enter Proper Component ID"})
+			return
+		}
+		id, err := strconv.Atoi(idStr)
+		if err != nil || id <= 0 {
+			c.JSON(http.StatusBadRequest, gin.H{"Error": "Enter Proper Component ID"})
+			return
+		}
+
+		for _, component := range *items {
+			if component.Id == id {
+				c.IndentedJSON(http.StatusOK, component)
+				return
+			}
+		}
+		c.JSON(http.StatusNotFound, gin.H{"Error": "No Component Found"})
 	}
 }

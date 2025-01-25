@@ -147,8 +147,9 @@ var components []models.Component = []models.Component{
 
 func main() {
 	router := gin.Default()
-
 	router.GET("/components/get-components", handlers.GetComponents(&components))
+	router.GET("./components/search-components", handlers.SearchComponent(&components))
+
 	router.POST("/components/add-components", handlers.AddNewComponent(&components))
 	router.Run("localhost:8080")
 
