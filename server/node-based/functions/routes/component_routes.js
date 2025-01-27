@@ -1,6 +1,6 @@
 // necessary imports
 const express = require("express");
-const ComponentModel = require("../models/models");
+const {Component,User} = require("../models/models");
 //relative imports
 const db = require("../services/firebase_db");
 const { getComponentById, addNewComponent,editComponentDetails} = require("../services/component_services");
@@ -24,7 +24,7 @@ routes.get("/v1/components/:id", async (req, res) => {
 
 routes.post("/v1/components/add", async (req, res) => {
   try {
-    const newComponent = new ComponentModel(
+    const newComponent = new Component(
       req.body.id,
       req.body.name,
       req.body.description,
@@ -40,7 +40,7 @@ routes.post("/v1/components/add", async (req, res) => {
 
 routes.post("/v1/components/:id/edit",async(req,res)=>{
     try{
-        const newComponent = new ComponentModel(
+        const newComponent = new Component(
             req.body.id,
             req.body.name,
             req.body.description,
