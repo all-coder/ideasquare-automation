@@ -23,7 +23,7 @@ Contains abstraction layers and models for the application's data. This could be
 1. Clone the repository:
 
     ```bash
-    git clone [repository-url]
+    git clone git@github.com:all-coder/ideasquare-automation.git
     ```
 
 2. Navigate into the project directory:
