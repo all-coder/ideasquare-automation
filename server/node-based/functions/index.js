@@ -1,13 +1,19 @@
 // necessary imports
-const functions = require("firebase-functions");
-const routes = require("./routes/component_routes");
-
-// initializing express app, and database
 const express = require("express");
 const cors = require("cors");
 
-const app = express();
+// relative imports
+const functions = require("firebase-functions");
+const component_routes = require("./routes/component_routes");
+const user_routes = require("./routes/user_routes");
 
+// initializing the express app
+const app = express();
 app.use(cors({ origin: true }));
-app.use(routes)
+
+// setting up the routes
+app.use(component_routes)
+app.use(user_routes)
+
+
 exports.app = functions.https.onRequest(app);
