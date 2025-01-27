@@ -12,8 +12,8 @@ class User{
         this.name = name;
         this.roll_no =roll_no; // point of difference
         this.club_name = club_name;
-        this. member_type = member_type;
+        this.member_type = member_type;
     }
 }
 
-module.exports = Component;
+module.exports = {Component,User};
