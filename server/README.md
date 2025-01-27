@@ -2,7 +2,7 @@
 ## Folder Structure
 
 - We are currently working with Node JS + Express JS.
-- Current Working Directory - `node-based/`
+- Current Working Directory - `node-based/functions/`
 
 ### `index.js`
 The main entry point of the application. It initializes the Express server and sets up middleware such as routing, error handling, and CORS.
