@@ -1,6 +1,6 @@
 class Component{
     constructor(id,name,description,count){
-        this.id = id; // will generate this unique id using uuid on the frontend
+        this.id = id; // unique id generated using uuid.
         this.name = name;
         this.description = description;
         this.count = count;

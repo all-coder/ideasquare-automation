@@ -9,7 +9,7 @@ const routes = express.Router();
 
 // routes
 routes.get("/v1", (req, res) => {
-  return res.status(200).send("IdeaSquare Inventory API Version");
+  return res.status(200).send("IdeaSquare Inventory API V1.0");
 });
 
 routes.get("/v1/components/:id", async (req, res) => {
