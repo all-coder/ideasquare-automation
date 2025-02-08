@@ -5,11 +5,6 @@ const express = require("express");
 const db = require("../services/firebase_db");
 const { addNewUser } = require("../services/user_services");
 const { Component, User } = require("../models/models");
-const {
-  getComponentById,
-  addNewComponent,
-  editComponentDetails,
-} = require("../services/component_services");
 
 const routes = express.Router();
 
@@ -28,3 +23,5 @@ routes.post("/v1/user/signup", async (req, res) => {
     res.status(500).send("Failed to Add New User ! ");
   }
 });
+
+module.exports =routes;
