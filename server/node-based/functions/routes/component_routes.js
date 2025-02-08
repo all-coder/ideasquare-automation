@@ -3,7 +3,7 @@ const express = require("express");
 const {Component,User} = require("../models/models");
 //relative imports
 const db = require("../services/firebase_db");
-const { getComponentById, addNewComponent,editComponentDetails} = require("../services/component_services");
+const { getComponentById, addNewComponent,editComponentDetails, updateComponentCount,checkoutComponents} = require("../services/component_services");
 
 const routes = express.Router();
 
@@ -38,6 +38,8 @@ routes.post("/v1/components/add", async (req, res) => {
   }
 });
 
+
+// need to modify the function so that only name, descriptions are edited and updated accordingly
 routes.post("/v1/components/:id/edit",async(req,res)=>{
     try{
         const newComponent = new Component(
@@ -47,11 +49,42 @@ routes.post("/v1/components/:id/edit",async(req,res)=>{
             req.body.count
         )
         await editComponentDetails(db,newComponent);
-        res.send(200).send("Component Details Updated Successfully ! ")
+        res.status(200).send("Component Details Updated Successfully ! ")
     }catch(error){
         console.log(error);
         res.status(500).send("Failed to Update Component Details !")
     }   
+});
+
+routes.post("/v1/components/:id/update-count",async(req,res)=>{
+  const id = req.params.id;
+  try{
+    let result = await updateComponentCount(db,id,req.body.difference,req.body.taken);
+    if(result==-1){
+      res.status(500).send("Bad request! try once more !");
+    }
+    else{
+      res.status(200).send("Count updated for id:" + id);
+    }
+  }catch(error){
+    console.log(error);
+    res.status(500).send("Bad Request! Try once more!");
+  }
+});
+
+routes.post("/v1/components/checkout",async(req,res)=>{
+  const requestedComponents = req.body.requestedComponents;
+  try{
+  let response = await checkoutComponents(db,requestedComponents);
+  if(response==-1){
+    res.status(500).send("Failed to retrieve");
+    return
+  }
+  res.status(200).send(response);
+  }catch(error){
+    res.status(500).send("Bad Request! Try again!")
+  }
+
 });
 
 module.exports = routes;
