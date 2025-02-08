@@ -1,5 +1,6 @@
-// const { response } = require("express");
-const admin = require("firebase-admin");
+// TO-DO
+// need to store the requestIDs in an another collection.
+
 async function addNewComponent(db, component) {
   await db
     .collection("components")
@@ -29,15 +30,15 @@ async function editComponentDetails(db, component) {
   );
 }
 
-async function updateComponentCount(db, id,difference,taken) {
+async function updateComponentCount(db, id, difference, taken) {
   let component = await getComponentById(db, id); // Ensure this returns a valid document
   var present = null;
-  if(taken==true){
-    if(!component || component.count < difference){
+  if (taken == true) {
+    if (!component || component.count < difference) {
       return -1;
     }
     present = component.count - difference;
-  }else{
+  } else {
     present = component.count + difference;
   }
   await db.collection("components").doc(id).update({ count: present });
@@ -45,38 +46,43 @@ async function updateComponentCount(db, id,difference,taken) {
   return present;
 }
 
-async function checkoutComponents(db,requestedComponents) {
-  if (requestedComponents.size == 0) {
-    return -1;
-  } else {
-    //unpacks the ids and itemCount in seperate 
-    const componentMap = new Map(Object.entries(requestedComponents).map(([key, value]) => [Number(key), value]));
-    const componentIds = Array.from(componentMap.keys());
-    const itemCount = Array.from(componentMap.values());
-    // retrieves all the relevant documents based off ids in one read operation(max 10 at a time).
-    const refs = componentIds.map(id => db.doc(`components/${id}`));
-    const snapshot = await db.getAll(...refs);
-    const documents = snapshot.map(doc => doc.data());
-    
-    var updatedCount = new Map()
-    for(let i=0;i<documents.length;i++){
-      if(documents[i]==null){
-        return -1
-      }
-      else{
-        if(documents[i].count < itemCount[i]){
-          return -1;
-        }else{
-          var presentCount = documents[i].count-itemCount[i];
-          updatedCount.set(componentIds[i],presentCount);
-        }
+
+async function checkoutComponents(db, requestedComponents) {
+  //unpacks the ids and itemCount in seperate arrays.
+  const componentMap = new Map(
+    Object.entries(requestedComponents).map(([key, value]) => [Number(key),value,]));
+
+  const componentIds = Array.from(componentMap.keys());
+  const itemCount = Array.from(componentMap.values());
+  // retrieves all the relevant documents based off ids in one read operation(max 10 at a time).
+  const refs = componentIds.map((id) => db.doc(`components/${id}`));
+  const snapshot = await db.getAll(...refs);
+  const documents = snapshot.map((doc) => doc.data());
+
+  // checks whether there are any null objects in the documents object; if any,sends a bad request.
+  var updatedCount = [];
+  for (let i = 0; i < documents.length; i++) {
+    if (documents[i] == null) {
+      return -1;
+    } else {
+      if (documents[i].count < itemCount[i]) {
+        return -1;
+      } else {
+        var presentCount = documents[i].count - itemCount[i];
+        updatedCount.push(presentCount);
       }
     }
-    const updatedCountObject = Object.fromEntries(updatedCount);
-    return updatedCountObject;
+  }
+  // updates the available count for the component.
+  for(let i=0;i<componentIds.length;i++){
+    await db.collection("components").doc(componentIds[i].toString()).update({count:updatedCount[i]});;
   }
 }
 
-
-
-module.exports = { addNewComponent, getComponentById,editComponentDetails,updateComponentCount,checkoutComponents};
+module.exports = {
+  addNewComponent,
+  getComponentById,
+  editComponentDetails,
+  updateComponentCount,
+  checkoutComponents,
+};

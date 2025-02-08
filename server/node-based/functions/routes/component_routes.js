@@ -39,7 +39,7 @@ routes.post("/v1/components/add", async (req, res) => {
 });
 
 
-// need to modify the function so that only name, descriptions are edited and updated accordingly
+// need to modify the function so that only name, descriptions are edited and updated accordingly.
 routes.post("/v1/components/:id/edit",async(req,res)=>{
     try{
         const newComponent = new Component(
@@ -74,10 +74,11 @@ routes.post("/v1/components/:id/update-count",async(req,res)=>{
 
 routes.post("/v1/components/checkout",async(req,res)=>{
   const requestedComponents = req.body.requestedComponents;
+  const requestId= req.body.requestId;
   try{
   let response = await checkoutComponents(db,requestedComponents);
   if(response==-1){
-    res.status(500).send("Failed to retrieve");
+    res.status(500).send("Reload once more! and try again!");
     return
   }
   res.status(200).send(response);
