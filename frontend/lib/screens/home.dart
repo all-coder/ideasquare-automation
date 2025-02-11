@@ -1,17 +1,10 @@
-// all-coder
+// author : Niranjan M(all-coder)
 import 'package:flutter/material.dart';
 //relative imports
 import '../widgets/filters.dart';
 import '../widgets/component_tile.dart';
 import '../widgets/appbar.dart';
 import '../models/dummy.dart';
-
-//#######  important comments ########
-//this is the root or the home page of the app
-//this is stateless widget by default
-//where you see sizedBox(), I mainly used them for spacing and relative adjustment of widgets
-//never use chatgpt, it always complicates your code.
-//use stackoverflow to understand the problem and try adjusting the code on your own.
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -21,14 +14,19 @@ class Home extends StatelessWidget {
       backgroundColor: const Color(0xffF2E9E4),
       body: Column(
         children: [
+          // custom appbar widget
           const SafeArea(
             child: CustomAppBar(),
           ),
-
+          
+          // filter widget
           const Filter(),
+
           const SizedBox(
             height: 5,
           ),
+
+          // scrollable area, where the individual components are loaded onto the screen
           Expanded(
             child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

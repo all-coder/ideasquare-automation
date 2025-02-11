@@ -11,7 +11,7 @@ class CustomAppBar extends StatelessWidget {
       margin: const EdgeInsets.all(10),
       child: Row(
         children: [
-          // menu button
+          // side drawer menu button
           Container(
             margin: const EdgeInsets.only(right: 5),
             height: 50,
@@ -28,7 +28,7 @@ class CustomAppBar extends StatelessWidget {
             ),
           ),
 
-          // search bar
+          // search textfield 
           Container(
             margin: const EdgeInsets.only(right: 3),
             width: MediaQuery.of(context).size.width / 1.5,
@@ -60,7 +60,7 @@ class CustomAppBar extends StatelessWidget {
             ),
           ),
 
-          // shopping button
+          // component cart button
           Container(
             height: 50,
             width: 50,
