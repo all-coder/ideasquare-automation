@@ -8,7 +8,6 @@ import 'package:ionicons/ionicons.dart';
 import '../models/component.dart';
 import '../screens/component_view.dart';
 
-
 // ##### important comments #####
 
 //this is the widget reponsible for the tiles you see on the app
@@ -23,6 +22,7 @@ class ComponentTile extends StatefulWidget {
 }
 
 class _ComponentTileState extends State<ComponentTile> {
+  int count = 0;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,8 +33,8 @@ class _ComponentTileState extends State<ComponentTile> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           GestureDetector(
-            onTap: (){
-              Navigator.of(context).push(MaterialPageRoute(builder: (ctx){
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
                 return ComponentView(component: widget.component);
               }));
             },
@@ -44,7 +44,7 @@ class _ComponentTileState extends State<ComponentTile> {
               margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
               child: Image.asset(
                 widget.component.imageURL,
-                alignment:Alignment.center ,
+                alignment: Alignment.center,
                 fit: BoxFit.cover,
               ),
             ),
@@ -57,7 +57,7 @@ class _ComponentTileState extends State<ComponentTile> {
             child: Text(
               widget.component.name,
               style: GoogleFonts.firaMono(
-                fontSize: 18,
+                fontSize: 16,
                 color: Colors.white,
               ),
             ),
@@ -83,6 +83,13 @@ class _ComponentTileState extends State<ComponentTile> {
                   top: 1,
                   left: 4,
                   child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if (count != 0) {
+                          count = count - 1;
+                        }
+                      });
+                    },
                     child: const Icon(
                       Ionicons.remove_circle_outline,
                       color: Colors.white,
@@ -94,6 +101,13 @@ class _ComponentTileState extends State<ComponentTile> {
                   top: 1,
                   left: (MediaQuery.of(context).size.width / 2 - 72).toDouble(),
                   child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        if (count < widget.component.available) {
+                          count = count + 1;
+                        }
+                      });
+                    },
                     child: const Icon(
                       Ionicons.add_circle_outline,
                       color: Colors.white,
@@ -110,7 +124,7 @@ class _ComponentTileState extends State<ComponentTile> {
                   left: ((MediaQuery.of(context).size.width / 2 - 50) / 2)
                       .toDouble(),
                   child: Text(
-                    "2",
+                    "$count",
                     style: GoogleFonts.firaMono(
                       fontSize: 18,
                       color: Colors.white,
