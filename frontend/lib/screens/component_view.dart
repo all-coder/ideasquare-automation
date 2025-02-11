@@ -1,4 +1,4 @@
-// all-coder 
+// all-coder
 
 import "package:flutter/material.dart";
 import 'package:google_fonts/google_fonts.dart';
@@ -46,7 +46,7 @@ class ComponentView extends StatelessWidget {
           Container(
             width: double.infinity,
             margin: const EdgeInsets.fromLTRB(17, 15, 17, 5),
-            padding: const EdgeInsets.fromLTRB(20, 10, 5, 4),
+            padding: const EdgeInsets.fromLTRB(20, 15, 20, 2),
             height: MediaQuery.of(context).size.height / 6,
             decoration: BoxDecoration(
               color: const Color(0xff2F2E2E),
@@ -55,68 +55,116 @@ class ComponentView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Total Quantity :        ${component.position[0]}",
-                  style: GoogleFonts.firaMono(
-                    fontSize: 20,
-                    color: Colors.white,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Total Quantity:",
+                      style: GoogleFonts.firaMono(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      "${component.position[0]}",
+                      style: GoogleFonts.firaMono(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  "In Stock :             ${component.available}",
-                  style: GoogleFonts.firaMono(
-                    fontSize: 20,
-                    color: Colors.white,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "In Stock",
+                      style: GoogleFonts.firaMono(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      "${component.available}",
+                      style: GoogleFonts.firaMono(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  "Rack No :               ${component.position[1]}",
-                  style: GoogleFonts.firaMono(
-                    fontSize: 20,
-                    color: Colors.white,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Rack No",
+                      style: GoogleFonts.firaMono(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      "${component.position[1]}",
+                      style: GoogleFonts.firaMono(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  "Box No :                ${component.position[2]}",
-                  style: GoogleFonts.firaMono(
-                    fontSize: 20,
-                    color: Colors.white,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Box No:",
+                      style: GoogleFonts.firaMono(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      "${component.position[2]}",
+                      style: GoogleFonts.firaMono(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
+          // action buttons
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              const SizedBox(
-                width: 14,
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xffEE6C4D),
-                ),
-                onPressed: () {},
+              Container(
+                padding:const EdgeInsets.all(5),
+                width: MediaQuery.of(context).size.width /2.5,
+                decoration: BoxDecoration(
+                    color: const Color(0xffEE6C4D),
+                    borderRadius: BorderRadius.circular(20)),
                 child: Text(
                   "Datasheet",
+                  textAlign: TextAlign.center,
                   style: GoogleFonts.firaMono(
-                    fontSize: 25,
+                    fontSize: 23,
                     color: Colors.white,
                   ),
                 ),
               ),
-              const SizedBox(
-                width: 8,
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xffA73032),
-                  
-                ),
-                onPressed: () {},
+              //0xffA73032
+              Container(
+                padding: const EdgeInsets.all(5),
+                width: MediaQuery.of(context).size.width /2.5,
+                decoration: BoxDecoration(
+                    color: const Color(0xffA73032),
+                    borderRadius: BorderRadius.circular(20)),
                 child: Text(
-                  "  Report  ",
+                  "Report",
+                  textAlign: TextAlign.center,
                   style: GoogleFonts.firaMono(
-                    fontSize: 25,
+                    fontSize: 23,
                     color: Colors.white,
                   ),
                 ),
