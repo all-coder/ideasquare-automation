@@ -11,18 +11,4 @@ The **lib** folder contains the following sections:
 - **models**: Contains useful abstractions and data models that simplify data handling and logic.
   
 - **assets**: Includes various static resources such as images, icons, and documents.
-
-## Status
-
-- **Last Update**: October 18th 2024
-
-![alt text](lib/assets/status/update-18th.png)
-
-- Fixed Bugs Related to rendering of widgets on screen
-- implemented gridview.builder()
-- implemented dynamic reloading of objects on the home.dart
-
-![alt text](lib/assets/status/update-18th-2.png)
-
-- Created the Component View Widget
-- Few bugs to be sorted out
+Remove-Item -Path "C:\Main\Development\Embedded Programming\Inventory_v1\frontend" -Recurse -Force
