@@ -8,10 +8,6 @@ import 'package:ionicons/ionicons.dart';
 import '../models/component.dart';
 import '../screens/component_view.dart';
 
-// ##### important comments #####
-
-//this is the widget reponsible for the tiles you see on the app
-//expects a Component class(component.dart-a useful abstraction)
 class ComponentTile extends StatefulWidget {
   const ComponentTile({required this.component, super.key});
   final Component component;
