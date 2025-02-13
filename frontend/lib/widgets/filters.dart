@@ -14,7 +14,7 @@ class Filter extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           color: const Color(0xffD9D2D2)),
       margin: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-      child: const Text("*Filters are yet to be decided"),
+      child: const Text("*Filters are yet to be decided*"),
     );
   }
 }
