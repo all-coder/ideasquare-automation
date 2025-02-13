@@ -13,14 +13,15 @@ class Home extends ConsumerWidget {
   Widget build(BuildContext context,WidgetRef ref) {
     // listens for data from the componentsProvider
     final components = ref.watch(componentsProvider);
+    final totalComponentsCount = ref.watch(totalCount);
     return Scaffold(
       // backgroundColor: const Color(0xffF2E9E4),
       backgroundColor: Colors.white,
       body: Column(
         children: [
           // custom appbar widget
-          const SafeArea(
-            child: CustomAppBar(),
+          SafeArea(
+            child: CustomAppBar(totalCount: totalComponentsCount,),
           ),
           
           // filter widget

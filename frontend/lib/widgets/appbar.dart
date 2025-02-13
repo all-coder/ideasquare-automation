@@ -7,7 +7,8 @@ import 'package:ionicons/ionicons.dart';
 import '../screens/checkout.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({super.key});
+  const CustomAppBar({required this.totalCount,super.key});
+  final int totalCount;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -101,7 +102,7 @@ class CustomAppBar extends StatelessWidget {
                         borderRadius: BorderRadius.circular(50),
                         color: const Color(0xffE25353)),
                     child: Text(
-                      "3", // counter button
+                      "$totalCount", // counter button
                       style: GoogleFonts.firaMono(
                         color: Colors.white,
                       ),

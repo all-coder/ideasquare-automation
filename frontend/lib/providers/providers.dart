@@ -5,24 +5,50 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../models/dummy.dart';
 import '../models/component.dart';
 
-// holds the dummy data
+// read-only provider for components, for now holds the dummy data.
 final componentsProvider = Provider((ref) {
   return dummyData;
 });
 
 class CartNotifier extends Notifier<Map<Component, int>> {
   @override
-  Map<Component, int> build() => {dummyData[0]: 2}; // Initial state
+  Map<Component, int> build() => {}; // Initial state
 
   void addProduct(Component component, int count) {
     state = {
       ...state,
-      component:
-          state.containsKey(component) ? state[component]! + count : count,
+      component: state.containsKey(component) ? state[component]! + count : count,
     };
+  }
+
+void decrementProduct(Component component) {
+  if (state.containsKey(component)) {
+    if (state[component]! > 1) {
+      state = {...state, component: state[component]! - 1};
+    } else {
+      // Remove the component if count reaches 0
+      final updatedState = Map<Component, int>.from(state);
+      updatedState.remove(component);
+      state = updatedState;
+    }
   }
 }
 
-final cartNotifier = NotifierProvider<CartNotifier, Map<Component,int>>(() {
+}
+
+// creating an instance of the CartNotifier
+final cartNotifier = NotifierProvider<CartNotifier, Map<Component, int>>(() {
   return CartNotifier();
+});
+
+final totalCount = Provider<int>((ref) {
+  final cartProducts = ref.watch(cartNotifier);
+  int total = 0;
+
+  // Summing up the quantities of each component
+  cartProducts.forEach((component, count) {
+    total += count;
+  });
+
+  return total;
 });

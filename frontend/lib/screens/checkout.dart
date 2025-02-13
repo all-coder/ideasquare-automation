@@ -125,7 +125,6 @@ class _CheckoutViewState extends ConsumerState<CheckoutView> {
           Container(
             margin: const EdgeInsets.fromLTRB(10, 10, 10, 8),
             padding: EdgeInsets.only(top: 20, bottom: 20),
-            height: 300,
             width: double.infinity,
             child: Column(
               children: checkoutWidgets.entries
