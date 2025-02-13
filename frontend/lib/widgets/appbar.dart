@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 
+// relative imports
+import '../screens/checkout.dart';
+
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({super.key});
   @override
@@ -28,7 +31,7 @@ class CustomAppBar extends StatelessWidget {
             ),
           ),
 
-          // search textfield 
+          // search textfield
           Container(
             margin: const EdgeInsets.only(right: 3),
             width: MediaQuery.of(context).size.width / 1.5,
@@ -70,17 +73,26 @@ class CustomAppBar extends StatelessWidget {
             ),
             child: Stack(
               children: [
-                const Positioned(
+                Positioned(
                   left: 8,
                   top: 8,
-                  child: Icon(
-                    Ionicons.cart_outline,
-                    color: Colors.white,
-                    size: 33,
+                  child: GestureDetector(
+                    onTap: () => {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (ctx) => CheckoutView(),
+                        ),
+                      ),
+                    },
+                    child: Icon(
+                      Ionicons.cart_outline,
+                      color: Colors.white,
+                      size: 33,
+                    ),
                   ),
                 ),
                 Positioned(
-                  top: 30 ,
+                  top: 30,
                   right: 1,
                   child: Container(
                     height: 20,
