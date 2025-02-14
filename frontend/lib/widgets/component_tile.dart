@@ -86,7 +86,7 @@ class _ComponentTileState extends ConsumerState<ComponentTile> {
                         // Allow it to decrement to zero
                         ref
                             .read(cartNotifier.notifier)
-                            .decrementProduct(widget.component);
+                            .decrement(widget.component);
                       }
                     },
                     child: const Icon(
@@ -104,7 +104,7 @@ class _ComponentTileState extends ConsumerState<ComponentTile> {
                       if (currentCount < widget.component.available) {
                         ref
                             .read(cartNotifier.notifier)
-                            .addProduct(widget.component, 1);
+                            .increment(widget.component, 1);
                       }
                     },
                     child: const Icon(

@@ -25,19 +25,14 @@ class Home extends ConsumerWidget {
           ),
           
           // filter widget
+          const SizedBox(height: 10,),
           const Filter(),
-
-          const SizedBox(
-            height: 5,
-          ),
-
           // scrollable area, where the individual components are loaded onto the screen
           Expanded(
             child: GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisExtent: 256,
-                // childAspectRatio: 0.8,
               ),
               itemCount: components.length, // Total number of items
               itemBuilder: (context, index) {

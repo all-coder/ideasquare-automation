@@ -9,7 +9,8 @@ import '../providers/providers.dart';
 import '../models/component.dart';
 
 // writing the checkoutTile as a separate widget
-Widget checkoutTile(Component component, int count) {
+Widget checkoutTile(
+    Component component, int count, Function increment, Function decrement) {
   return Material(
     elevation: 20,
     child: Container(
@@ -59,6 +60,12 @@ Widget checkoutTile(Component component, int count) {
                   width: 35,
                   color: const Color(0xffBFBABA),
                   child: GestureDetector(
+                    onTap: () {
+                      if (count >= 0) {
+                        count = count - 1; // updating the UI
+                        decrement(component);
+                      }
+                    },
                     child: Icon(Ionicons.remove_sharp),
                   ),
                 ),
@@ -82,6 +89,12 @@ Widget checkoutTile(Component component, int count) {
                   width: 35,
                   color: const Color(0xffBFBABA),
                   child: GestureDetector(
+                    onTap: () {
+                      if (count < component.available) {
+                        count = count + 1; //updating the UI.
+                        increment(component, 1);
+                      }
+                    },
                     child: Icon(Ionicons.add_sharp),
                   ),
                 ),
@@ -106,6 +119,12 @@ class _CheckoutViewState extends ConsumerState<CheckoutView> {
   @override
   Widget build(BuildContext context) {
     final checkoutWidgets = ref.watch(cartNotifier);
+
+    final incrementFunc = (Component component, int count) =>
+        ref.read(cartNotifier.notifier).increment(component, count);
+    final decrementFunc = (Component component) =>
+        ref.read(cartNotifier.notifier).decrement(component);
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
@@ -128,7 +147,8 @@ class _CheckoutViewState extends ConsumerState<CheckoutView> {
             width: double.infinity,
             child: Column(
               children: checkoutWidgets.entries
-                  .map((entry) => checkoutTile(entry.key, entry.value))
+                  .map((entry) => checkoutTile(
+                      entry.key, entry.value, incrementFunc, decrementFunc))
                   .toList(),
             ),
           ),

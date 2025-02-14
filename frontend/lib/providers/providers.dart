@@ -14,14 +14,14 @@ class CartNotifier extends Notifier<Map<Component, int>> {
   @override
   Map<Component, int> build() => {}; // Initial state
 
-  void addProduct(Component component, int count) {
+  void increment(Component component,int count) {
     state = {
       ...state,
       component: state.containsKey(component) ? state[component]! + count : count,
     };
   }
 
-void decrementProduct(Component component) {
+void decrement(Component component) {
   if (state.containsKey(component)) {
     if (state[component]! > 1) {
       state = {...state, component: state[component]! - 1};
@@ -36,7 +36,6 @@ void decrementProduct(Component component) {
 
 }
 
-// creating an instance of the CartNotifier
 final cartNotifier = NotifierProvider<CartNotifier, Map<Component, int>>(() {
   return CartNotifier();
 });
