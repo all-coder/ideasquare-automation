@@ -15,6 +15,10 @@ routes.get("/v1", (req, res) => {
 routes.get("/v1/components/:id", async (req, res) => {
   try {
     const response = await getComponentById(db, req.params.id);
+    if(response==null){
+      res.status(500).send("Component not found ! Re-Check your ID once more !");
+      return;
+    }
     res.status(200).send(response);
   } catch (error) {
     console.error(error);
@@ -28,10 +32,14 @@ routes.post("/v1/components/add", async (req, res) => {
       req.body.id,
       req.body.name,
       req.body.description,
-      req.body.count,
+      req.body.available,
+      req.body.totalCount,
+      req.body.position,
+      req.body.datasheet,
+      req.body.imageURL,
     );
     await addNewComponent(db, newComponent);
-    res.status(200).send("Added New Component Successfully");
+    res.status(200).send(`Component with ID ${newComponent.id}`);
   } catch (error) {
     console.error(error);
     res.status(500).send(error);
@@ -42,12 +50,16 @@ routes.post("/v1/components/add", async (req, res) => {
 // need to modify the function so that only name, descriptions are edited and updated accordingly.
 routes.post("/v1/components/:id/edit",async(req,res)=>{
     try{
-        const newComponent = new Component(
-            req.body.id,
-            req.body.name,
-            req.body.description,
-            req.body.count
-        )
+      const newComponent = new Component(
+        req.body.id,
+        req.body.name,
+        req.body.description,
+        req.body.available,
+        req.body.totalCount,
+        req.body.position,
+        req.body.datasheet,
+        req.body.imageURL,
+      );
         await editComponentDetails(db,newComponent);
         res.status(200).send("Component Details Updated Successfully ! ")
     }catch(error){

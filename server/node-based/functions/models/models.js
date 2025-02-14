@@ -1,5 +1,5 @@
 class Component{
-    constructor(id,name,description,count){
+    constructor(id,name,description,available,totalCount,imageURL,){
         this.id = id; // unique id generated using uuid.
         this.name = name;
         this.description = description;

@@ -8,7 +8,11 @@ async function addNewComponent(db, component) {
     .create({
       name: component.name,
       description: component.description,
-      count: component.count,
+      available: component.available,
+      totalCount:component.totalCount,
+      imageURL:component.imageURL,
+      datasheet:component.datasheet,
+      position:component.position,
     });
 }
 
@@ -24,7 +28,11 @@ async function editComponentDetails(db, component) {
     {
       name: component.name,
       description: component.description,
-      count: component.count,
+      available: component.available,
+      totalCount:component.totalCount,
+      imageURL:component.imageURL,
+      datasheet:component.datasheet,
+      position:component.position,
     },
     { merge: true }
   );
@@ -37,11 +45,11 @@ async function updateComponentCount(db, id, difference, taken) {
     if (!component || component.count < difference) {
       return -1;
     }
-    present = component.count - difference;
+    present = component.available - difference;
   } else {
-    present = component.count + difference;
+    present = component.available + difference;
   }
-  await db.collection("components").doc(id).update({ count: present });
+  await db.collection("components").doc(id).update({ available: present });
 
   return present;
 }
@@ -65,10 +73,10 @@ async function checkoutComponents(db, requestedComponents) {
     if (documents[i] == null) {
       return -1;
     } else {
-      if (documents[i].count < itemCount[i]) {
+      if (documents[i].available < itemCount[i]) {
         return -1;
       } else {
-        var presentCount = documents[i].count - itemCount[i];
+        var presentCount = documents[i].available - itemCount[i];
         updatedCount.push(presentCount);
       }
     }
