@@ -13,7 +13,7 @@ class Filter extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: const Color(0xffD9D2D2)),
-      margin: const EdgeInsets.fromLTRB(10, 5, 10, 20),
+      margin: const EdgeInsets.fromLTRB(10, 5, 10, 10),
       child: const Text("*Filters are yet to be decided*"),
     );
   }
