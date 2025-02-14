@@ -33,7 +33,6 @@ class ComponentView extends StatelessWidget {
             margin: const EdgeInsets.fromLTRB(15, 20, 15, 4),
             height: MediaQuery.of(context).size.height / 2.8,
             child: Card(
-              // color: Colors.amber,
               elevation: 150,
               child: Image.asset(
                 component.imageURL,
@@ -66,7 +65,7 @@ class ComponentView extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "${component.position[0]}",
+                      "${component.totalCount}",
                       style: GoogleFonts.firaMono(
                         fontSize: 20,
                         color: Colors.white,
@@ -134,13 +133,16 @@ class ComponentView extends StatelessWidget {
               ],
             ),
           ),
+          const SizedBox(
+            height: 10,
+          ),
           // action buttons
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
-                padding:const EdgeInsets.all(5),
-                width: MediaQuery.of(context).size.width /2.5,
+                padding: const EdgeInsets.all(5),
+                width: MediaQuery.of(context).size.width / 2.1,
                 decoration: BoxDecoration(
                     color: const Color(0xffEE6C4D),
                     borderRadius: BorderRadius.circular(20)),
@@ -156,7 +158,7 @@ class ComponentView extends StatelessWidget {
               //0xffA73032
               Container(
                 padding: const EdgeInsets.all(5),
-                width: MediaQuery.of(context).size.width /2.5,
+                width: MediaQuery.of(context).size.width / 2.5,
                 decoration: BoxDecoration(
                     color: const Color(0xffA73032),
                     borderRadius: BorderRadius.circular(20)),
