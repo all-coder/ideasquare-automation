@@ -6,6 +6,7 @@ import '../widgets/filters.dart';
 import '../widgets/component_tile.dart';
 import '../widgets/appbar.dart';
 import '../providers/providers.dart';
+import '../widgets/side_drawer.dart';
 
 class Home extends ConsumerWidget {
   const Home({super.key});
@@ -15,6 +16,7 @@ class Home extends ConsumerWidget {
     final components = ref.watch(componentsProvider);
     final totalComponentsCount = ref.watch(totalCount);
     return Scaffold(
+      drawer: SideDrawer(),
       // backgroundColor: const Color(0xffF2E9E4),
       backgroundColor: Colors.white,
       body: Column(
