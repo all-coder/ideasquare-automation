@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 
 //relative imports
 import './screens/home.dart';
+import './screens/auth.dart';
 // import './screens/component_view.dart';
 // import './models/dummy.dart';
 // import './models/component.dart';
@@ -18,7 +18,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Home(),
+      home: LoginPage(),
     );
   }
 }

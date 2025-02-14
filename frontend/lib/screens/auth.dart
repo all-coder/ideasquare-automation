@@ -1,4 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+import './signup_page.dart';
+import './home.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,6 +17,41 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController rollNoController = TextEditingController();
+
+  Future<void> loginUser() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+    String rollNo = rollNoController.text.trim();
+    String email = emailController.text.trim();
+    String password = passwordController.text.trim();
+
+    try {
+      final response = await http.get(
+        Uri.parse("http://localhost:60347/v1/user/authentication/$rollNo"),
+      );
+      if (response.statusCode == 200) {
+        final userData = jsonDecode(response.body);
+
+        if (userData["email"] == email && userData["password"] == password) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text("Login Successful")));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => const Home()));
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Invalid email or password")));
+        }
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("User not found")));
+      }
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Error connecting to the server")));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +59,8 @@ class _LoginPageState extends State<LoginPage> {
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/loginbackground.png"),
-            fit: BoxFit.fill,
+            image: AssetImage("lib/assets/images/loginbackground.png"),
+            fit: BoxFit.cover,
           ),
         ),
         child: Scaffold(
@@ -59,6 +100,29 @@ class _LoginPageState extends State<LoginPage> {
                     key: _formKey,
                     child: Column(
                       children: [
+                        TextFormField(
+                          controller: rollNoController,
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(Icons.numbers),
+                            hintText: "Roll Number",
+                            hintStyle: const TextStyle(
+                                color: Color.fromARGB(71, 59, 59, 59)),
+                            filled: true,
+                            fillColor: const Color.fromARGB(238, 238, 238, 238),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Please enter the Roll number";
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
                         TextFormField(
                           controller: emailController,
                           decoration: InputDecoration(
@@ -111,20 +175,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         const SizedBox(height: 16),
                         ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              // If validation passes
-                              // print("Email: ${emailController.text}");
-                              // print("Password: ${passwordController.text}");
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Processing Data'),
-                                ),
-                              );
-                              emailController.clear();
-                              passwordController.clear();
-                            }
-                          },
+                          onPressed: loginUser,
                           style: ButtonStyle(
                             backgroundColor: WidgetStateProperty.all(
                               const Color.fromARGB(255, 117, 115, 115),
@@ -147,17 +198,34 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         const SizedBox(height: 10),
                         TextButton(
-                          onPressed: () {},
+                          onPressed:
+                              () {}, //implementation of a proper logic using proper backend
                           child: const Text(
                             "Forgot Password?",
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 10,
+                              fontSize: 15,
                               decoration: TextDecoration.underline,
                               decorationColor: Colors.white,
                             ),
                           ),
                         ),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const SignupPage()));
+                            },
+                            child: const Text(
+                              "New User? Sign Up!",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: Colors.white),
+                            )),
                       ],
                     ),
                   ),
