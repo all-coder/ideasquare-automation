@@ -9,10 +9,10 @@ async function addNewComponent(db, component) {
       name: component.name,
       description: component.description,
       available: component.available,
-      totalCount:component.totalCount,
-      imageURL:component.imageURL,
-      datasheet:component.datasheet,
-      position:component.position,
+      totalCount: component.totalCount,
+      imageURL: component.imageURL,
+      datasheet: component.datasheet,
+      position: component.position,
     });
 }
 
@@ -23,16 +23,40 @@ async function getComponentById(db, id) {
   return response;
 }
 
+// use this function to retrieve all ids in one go and store it locally
+async function getAllIds(db){ 
+  let snapshot = await db.collection("components").get();
+  const ids = snapshot.docs.map(doc=>doc.id);
+  return ids
+
+}
+
+// fetching documents by specific componentIds
+async function getComponentsByIds(db, componentIds, index = 0) {
+  try {
+    const refs = componentIds.slice(index).map(id => db.doc(`components/${id}`));
+    const snapshot = await db.getAll(...refs);
+    const response =snapshot.map(doc => doc.data());
+    return response;
+
+  } catch (error) {
+    console.error('Error in getComponentById:', error);
+    throw error;
+  }
+}
+
+
+
 async function editComponentDetails(db, component) {
   await db.collection("components").doc(component.id).set(
     {
       name: component.name,
       description: component.description,
       available: component.available,
-      totalCount:component.totalCount,
-      imageURL:component.imageURL,
-      datasheet:component.datasheet,
-      position:component.position,
+      totalCount: component.totalCount,
+      imageURL: component.imageURL,
+      datasheet: component.datasheet,
+      position: component.position,
     },
     { merge: true }
   );
@@ -54,11 +78,14 @@ async function updateComponentCount(db, id, difference, taken) {
   return present;
 }
 
-
 async function checkoutComponents(db, requestedComponents) {
   //unpacks the ids and itemCount in seperate arrays.
   const componentMap = new Map(
-    Object.entries(requestedComponents).map(([key, value]) => [Number(key),value,]));
+    Object.entries(requestedComponents).map(([key, value]) => [
+      Number(key),
+      value,
+    ])
+  );
 
   const componentIds = Array.from(componentMap.keys());
   const itemCount = Array.from(componentMap.values());
@@ -82,8 +109,11 @@ async function checkoutComponents(db, requestedComponents) {
     }
   }
   // updates the available count for the component.
-  for(let i=0;i<componentIds.length;i++){
-    await db.collection("components").doc(componentIds[i].toString()).update({count:updatedCount[i]});;
+  for (let i = 0; i < componentIds.length; i++) {
+    await db
+      .collection("components")
+      .doc(componentIds[i].toString())
+      .update({ count: updatedCount[i] });
   }
 }
 
@@ -93,4 +123,6 @@ module.exports = {
   editComponentDetails,
   updateComponentCount,
   checkoutComponents,
+  getAllIds,
+  getComponentsByIds,
 };
