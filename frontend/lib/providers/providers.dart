@@ -2,13 +2,33 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 // relative imports
-import '../models/dummy.dart';
+// import '../models/dummy.dart';
 import '../models/component.dart';
+import '../utils/helper.dart';
 
 // read-only provider for components, for now holds the dummy data.
-final componentsProvider = Provider((ref) {
-  return dummyData;
+// final componentsProvider = Provider((ref) {
+//   return dummyData;
+// });
+final _cachedComponentsProvider = StateProvider<Map<List<String>, List<Component>>>((ref) => {});
+
+final componentsProvider = FutureProvider.family<List<Component>, List<String>>((ref, ids) async {
+  final cache = ref.read(_cachedComponentsProvider);
+
+  // Return cached result if available
+  if (cache.containsKey(ids)) return cache[ids]!;
+
+  // Fetch data and update cache
+  final fetchedData = await getComponents(ids);
+  ref.read(_cachedComponentsProvider.notifier).state = {
+    ...cache,
+    ids: fetchedData,
+  };
+  print(fetchedData);
+  return fetchedData;
 });
+
+
 
 class CartNotifier extends Notifier<Map<Component, int>> {
   @override

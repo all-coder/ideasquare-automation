@@ -37,12 +37,11 @@ routes.get("/v1/components/get-all-ids", async (req, res) => {
   }
 });
 
-// gets components based on the ids array provided
-routes.get("/v1/components/get-components-by-ids", async (req, res) => {
+// gets(but uses post request)components based on the ids array provided
+routes.post("/v1/components/get-components-by-ids", async (req, res) => {
   try {
     const { componentIds, index = 0 } = req.body;
     
-    // Input validation
     if (!componentIds || !Array.isArray(componentIds)) {
       return res.status(400).json({
         error: "Invalid request: componentIds must be an array"

@@ -36,14 +36,20 @@ async function getComponentsByIds(db, componentIds, index = 0) {
   try {
     const refs = componentIds.slice(index).map(id => db.doc(`components/${id}`));
     const snapshot = await db.getAll(...refs);
-    const response =snapshot.map(doc => doc.data());
+
+    const response = snapshot.reduce((acc, doc, i) => {
+      acc[componentIds[index + i]] = doc.exists ? doc.data() : null;
+      return acc;
+    }, {});
+
     return response;
 
   } catch (error) {
-    console.error('Error in getComponentById:', error);
+    console.error('Error in getComponentsByIds:', error);
     throw error;
   }
 }
+
 
 
 
