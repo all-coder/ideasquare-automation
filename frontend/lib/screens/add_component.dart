@@ -7,8 +7,6 @@ State<StatefulWidget> createState() {
     return _AddComponentState();
   }
 }
-
-
 class _AddComponentState extends State<AddComponent>{
   @override
 
