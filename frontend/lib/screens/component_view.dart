@@ -2,6 +2,7 @@
 //necessary imports
 import "package:flutter/material.dart";
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 //relative imports
 import "../models/component.dart";
@@ -33,12 +34,11 @@ class ComponentView extends StatelessWidget {
             margin: const EdgeInsets.fromLTRB(15, 20, 15, 4),
             height: MediaQuery.of(context).size.height / 2.8,
             child: Card(
-              elevation: 150,
-              child: Image.asset(
-                component.imageURL,
-                fit: BoxFit.cover,
-              ),
-            ),
+                elevation: 150,
+                child: CachedNetworkImage(
+                  imageUrl: component.imageURL,
+                  fit: BoxFit.cover,
+                )),
           ),
 
           //this container contains the details about the component(stock availability and position in the rack)

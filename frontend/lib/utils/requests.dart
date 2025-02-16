@@ -2,8 +2,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-const String baseURL =
-    "https://app-kdbkwlv4sq-uc.a.run.app/v1/";
+// const String baseURL =
+//     "https://app-kdbkwlv4sq-uc.a.run.app/v1/";
+const String baseURL = "http://10.0.2.2:5001/ideasquare-automation-ffc80/us-central1/app/v1/";
 Future<dynamic>? getRequest(String endpoint) async {
   try {
     final fullURL = baseURL + endpoint;

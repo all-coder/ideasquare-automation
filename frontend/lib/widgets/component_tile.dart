@@ -1,10 +1,11 @@
 // all-coder
-
+//necessary imports
 import 'package:flutter/material.dart';
 import 'package:frontend/providers/providers.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 //relative imports
 import '../models/component.dart';
@@ -43,15 +44,13 @@ class _ComponentTileState extends ConsumerState<ComponentTile> {
               height: 120,
               margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
               child: widget.component.imageURL.isNotEmpty
-                  ? Image.network(
-                      widget.component.imageURL,
+                  ? CachedNetworkImage(
+                      imageUrl: widget.component.imageURL,
                       alignment: Alignment.center,
                       fit: BoxFit.cover,
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(child: CircularProgressIndicator());
-                      },
-                      errorBuilder: (context, error, stackTrace) =>
+                      placeholder: (context, url) =>
+                          Center(child: CircularProgressIndicator()),
+                      errorWidget: (context, url, error) =>
                           Icon(Icons.broken_image),
                     )
                   : Icon(Icons.image),
