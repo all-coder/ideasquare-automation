@@ -1,8 +1,7 @@
-// necessary imports
 const express = require("express");
-const { Component, User } = require("../models/models");
-//relative imports
-const db = require("../services/firebase_db");
+const {Component, User} = require("../models/models");
+// relative imports
+const db = require("../services/firebaseDb");
 const {
   addNewComponent,
   getComponentById,
@@ -11,7 +10,7 @@ const {
   checkoutComponents,
   getComponentsByIds,
   getAllIds,
-} = require("../services/component_services");
+} = require("../services/componentServices");
 
 const routes = express.Router();
 
@@ -26,7 +25,7 @@ routes.get("/v1", (req, res) => {
 // retrieves all ids present in the collection("components")
 routes.get("/v1/components/get-all-ids", async (req, res) => {
   try {
-    let response = await getAllIds(db);
+    const response = await getAllIds(db);
     if (response) {
       res.status(200).send(response);
     } else {
@@ -40,43 +39,42 @@ routes.get("/v1/components/get-all-ids", async (req, res) => {
 // gets(but uses post request)components based on the ids array provided
 routes.post("/v1/components/get-components-by-ids", async (req, res) => {
   try {
-    const { componentIds, index = 0 } = req.body;
-    
+    const {componentIds, index = 0} = req.body;
+
     if (!componentIds || !Array.isArray(componentIds)) {
       return res.status(400).json({
-        error: "Invalid request: componentIds must be an array"
+        error: "Invalid request: componentIds must be an array",
       });
     }
 
     if (componentIds.length === 0) {
       return res.status(400).json({
-        error: "Component Ids array is empty"
+        error: "Component Ids array is empty",
       });
     }
 
     // Validate index
-    if (typeof index !== 'number' || index < 0 || index >= componentIds.length) {
+    if (typeof index !== "number" || index < 0 || index >= componentIds.length) {
       return res.status(400).json({
-        error: "Invalid index value"
+        error: "Invalid index value",
       });
     }
     // res.status(200).send(componentIds);
     // return;
     const components = await getComponentsByIds(db, componentIds, index);
-    
+
     if (!components) {
       return res.status(404).json({
-        error: "No components found for the provided IDs"
+        error: "No components found for the provided IDs",
       });
     }
 
     return res.status(200).json(components);
-
   } catch (error) {
-    console.error('Error fetching components:', error);
+    console.error("Error fetching components:", error);
     return res.status(500).json({
       error: "Internal Server Error",
-      message: error.message
+      message: error.message,
     });
   }
 });
@@ -87,8 +85,8 @@ routes.get("/v1/components/:id", async (req, res) => {
     const response = await getComponentById(db, req.params.id);
     if (response == null) {
       res
-        .status(500)
-        .send("Component not found ! Re-Check your ID once more !");
+          .status(500)
+          .send("Component not found ! Re-Check your ID once more !");
       return;
     }
     res.status(200).send(response);
@@ -103,14 +101,14 @@ routes.get("/v1/components/:id", async (req, res) => {
 routes.post("/v1/components/add", async (req, res) => {
   try {
     const newComponent = new Component(
-      req.body.id,
-      req.body.name,
-      req.body.description,
-      req.body.available,
-      req.body.totalCount,
-      req.body.position,
-      req.body.datasheet,
-      req.body.imageURL
+        req.body.id,
+        req.body.name,
+        req.body.description,
+        req.body.available,
+        req.body.totalCount,
+        req.body.position,
+        req.body.datasheet,
+        req.body.imageURL,
     );
     await addNewComponent(db, newComponent);
     res.status(200).send(`Component with ID ${newComponent.id}`);
@@ -124,14 +122,14 @@ routes.post("/v1/components/add", async (req, res) => {
 routes.post("/v1/components/:id/edit", async (req, res) => {
   try {
     const newComponent = new Component(
-      req.body.id,
-      req.body.name,
-      req.body.description,
-      req.body.available,
-      req.body.totalCount,
-      req.body.position,
-      req.body.datasheet,
-      req.body.imageURL
+        req.body.id,
+        req.body.name,
+        req.body.description,
+        req.body.available,
+        req.body.totalCount,
+        req.body.position,
+        req.body.datasheet,
+        req.body.imageURL,
     );
     await editComponentDetails(db, newComponent);
     res.status(200).send("Component Details Updated Successfully ! ");
@@ -144,11 +142,11 @@ routes.post("/v1/components/:id/edit", async (req, res) => {
 routes.post("/v1/components/:id/update-count", async (req, res) => {
   const id = req.params.id;
   try {
-    let result = await updateComponentCount(
-      db,
-      id,
-      req.body.difference,
-      req.body.taken
+    const result = await updateComponentCount(
+        db,
+        id,
+        req.body.difference,
+        req.body.taken,
     );
     if (result == -1) {
       res.status(500).send("Bad request! try once more !");
@@ -165,7 +163,7 @@ routes.post("/v1/components/checkout", async (req, res) => {
   const requestedComponents = req.body.requestedComponents;
   const requestId = req.body.requestId;
   try {
-    let response = await checkoutComponents(db, requestedComponents);
+    const response = await checkoutComponents(db, requestedComponents);
     if (response == -1) {
       res.status(500).send("Reload once more! and try again!");
       return;

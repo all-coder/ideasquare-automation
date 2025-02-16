@@ -103,7 +103,7 @@ class ComponentView extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "${component.position[1]}",
+                      "${component.position[0]}",
                       style: GoogleFonts.firaMono(
                         fontSize: 20,
                         color: Colors.white,
@@ -122,7 +122,7 @@ class ComponentView extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "${component.position[2]}",
+                      "${component.position[1]}",
                       style: GoogleFonts.firaMono(
                         fontSize: 20,
                         color: Colors.white,

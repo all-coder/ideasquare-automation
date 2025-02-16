@@ -10,21 +10,34 @@ import '../utils/helper.dart';
 // final componentsProvider = Provider((ref) {
 //   return dummyData;
 // });
-final _cachedComponentsProvider = StateProvider<Map<List<String>, List<Component>>>((ref) => {});
+class CachedComponentsNotifier extends StateNotifier<Map<String, List<Component>>> {
+  CachedComponentsNotifier() : super({});
+
+  void addToCache(String key, List<Component> components) {
+    state = {...state, key: components};  // Ensures immutability
+  }
+
+  List<Component>? getFromCache(String key) {
+    return state[key];
+  }
+}
+
+final cachedComponentsProvider = StateNotifierProvider<CachedComponentsNotifier, Map<String, List<Component>>>(
+  (ref) => CachedComponentsNotifier(),
+);
 
 final componentsProvider = FutureProvider.family<List<Component>, List<String>>((ref, ids) async {
-  final cache = ref.read(_cachedComponentsProvider);
+  final cacheNotifier = ref.read(cachedComponentsProvider.notifier);
+  final cacheKey = ids.join(',');
 
   // Return cached result if available
-  if (cache.containsKey(ids)) return cache[ids]!;
+  final cachedData = cacheNotifier.getFromCache(cacheKey);
+  if (cachedData != null) return cachedData;
 
   // Fetch data and update cache
   final fetchedData = await getComponents(ids);
-  ref.read(_cachedComponentsProvider.notifier).state = {
-    ...cache,
-    ids: fetchedData,
-  };
-  print(fetchedData);
+  cacheNotifier.addToCache(cacheKey, fetchedData);
+
   return fetchedData;
 });
 

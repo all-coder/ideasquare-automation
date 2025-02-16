@@ -42,11 +42,19 @@ class _ComponentTileState extends ConsumerState<ComponentTile> {
               color: Colors.white,
               height: 120,
               margin: const EdgeInsets.fromLTRB(10, 10, 10, 5),
-              child: Image.asset(
-                widget.component.imageURL,
-                alignment: Alignment.center,
-                fit: BoxFit.cover,
-              ),
+              child: widget.component.imageURL.isNotEmpty
+                  ? Image.network(
+                      widget.component.imageURL,
+                      alignment: Alignment.center,
+                      fit: BoxFit.cover,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(child: CircularProgressIndicator());
+                      },
+                      errorBuilder: (context, error, stackTrace) =>
+                          Icon(Icons.broken_image),
+                    )
+                  : Icon(Icons.image),
             ),
           ),
           const SizedBox(height: 10),

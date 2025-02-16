@@ -14,7 +14,7 @@ class Home extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    const List<String> ids = ["id1", "id2", "id3"];
+    const List<String> ids = ["1", "2", "3"];
     final componentsAsync = ref.watch(componentsProvider(ids));
     final totalComponentsCount = ref.watch(totalCount);
 
