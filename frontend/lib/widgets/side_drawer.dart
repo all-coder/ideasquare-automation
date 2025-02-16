@@ -1,7 +1,10 @@
+// necessary imports
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/add_component.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 
+// relative imports
 class SideDrawer extends StatelessWidget {
   const SideDrawer({super.key});
   @override
@@ -10,22 +13,28 @@ class SideDrawer extends StatelessWidget {
       child: Column(
         children: [
           DrawerHeader(
-              decoration: const BoxDecoration(
-                color: Color(0xff2F2E2E),
-              ),
-              padding: const EdgeInsets.all(20),
-              child: Row(
-                children: [
-                  Row(
-                    children: [
-                      const SizedBox(
-                        width: 18,
-                      ),
-                    ],
-                  )
-                ],
-              )),
+            decoration: const BoxDecoration(
+              color: Color(0xff2F2E2E),
+            ),
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              children: [
+                Row(
+                  children: [
+                    const SizedBox(
+                      width: 18,
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
           ListTile(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
+                return AddComponent();
+              }));
+            },
             leading: const Icon(
               Icons.bubble_chart,
               size: 26,
