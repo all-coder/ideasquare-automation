@@ -1,6 +1,7 @@
 // necessary imports
 import 'package:flutter/material.dart';
 import 'package:frontend/screens/add_component.dart';
+import 'package:frontend/screens/settings.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 
@@ -91,6 +92,11 @@ class SideDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
+                return Settings();
+              }));
+            },
             leading: const Icon(
               Ionicons.settings_sharp,
               size: 25,
